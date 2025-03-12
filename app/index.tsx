@@ -1,84 +1,114 @@
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Link } from "expo-router";
+import { CaretRight, Gear, MagnifyingGlass } from "phosphor-react-native";
+import {
+    Dimensions,
+    Image,
+    StatusBar,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
+} from "react-native";
 
-export default function Dashboard() {
+const { height } = Dimensions.get("window");
+
+export default function Index() {
     return (
-        <View className="flex-1 bg-gray-50">
-            {/* Cabeçalho */}
-            <View className="bg-blue-600 p-4 flex-row justify-between items-center">
-                <Text className="text-white text-2xl font-bold">Dashboard</Text>
+        <View className="flex-1 bg-[#F77764]">
+            <StatusBar barStyle="dark-content" />
+
+            <View className="flex-row justify-between items-center pt-3 px-8 mb-4">
+                <Text className="text-white text-3xl font-bold">Pokédex</Text>
+                <Gear size={32} color="#FFF" />
             </View>
 
-            {/* Seção de Estatísticas */}
-            <View className="p-4 flex-row justify-between">
-                {/* Card de Estatísticas 1 */}
-                <View className="bg-white p-4 w-1/3 rounded-lg shadow-md">
-                    <Text className="text-xl font-semibold text-gray-800">Visitas</Text>
-                    <Text className="text-3xl font-bold text-blue-600">1,500</Text>
-                    <Text className="text-sm text-gray-500">Últimos 7 dias</Text>
-                </View>
+            <Text className="text-white text-xl px-8">
+                Encontre seu pokemon pesquisando pelo nome ou por seu Código Pokédex.
+            </Text>
 
-                {/* Card de Estatísticas 2 */}
-                <View className="bg-white p-4 w-1/3 rounded-lg shadow-md">
-                    <Text className="text-xl font-semibold text-gray-800">Vendas</Text>
-                    <Text className="text-3xl font-bold text-green-600">320</Text>
-                    <Text className="text-sm text-gray-500">Últimos 7 dias</Text>
-                </View>
-
-                {/* Card de Estatísticas 3 */}
-                <View className="bg-white p-4 w-1/3 rounded-lg shadow-md">
-                    <Text className="text-xl font-semibold text-gray-800">Novos Usuários</Text>
-                    <Text className="text-3xl font-bold text-yellow-600">120</Text>
-                    <Text className="text-sm text-gray-500">Últimos 7 dias</Text>
-                </View>
+            <View className="flex-row gap-4 bg-[#F98E80] py-2 px-4 rounded-lg mx-8 my-4 items-center">
+                <MagnifyingGlass size={25} color="#FFF" />
+                <TextInput
+                    className="flex-1 text-white"
+                    placeholder="Pesquisar"
+                    placeholderTextColor="#FFF"
+                />
             </View>
 
-            {/* Lista de Itens */}
-            <ScrollView className="px-4 py-2">
-                {/* Card de Item 1 */}
-                <View className="bg-white p-4 mb-4 rounded-lg shadow-md w-full">
-                    <View className="items-center">
+            <View className="flex-1 bg-white pt-4 px-4 rounded-t-2xl">
+                <Text className="text-black text-2xl mb-4 font-bold">Todos os pokemons</Text>
+                <View className="bg-white flex-row items-center shadow shadow-black justify-between" >
+                    <View className=" flex-row items-center gap-2">
                         <Image
-                            source={{ uri: 'https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg' }}
-                            className="w-40 h-52 rounded-lg mb-4"
+                            className="w-40 h-40"
+                            source={{ uri: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png" }}
                         />
+                        <View>
+                            <Text>#001</Text>
+                            <Text>nome</Text>
+                        </View>
                     </View>
-                    <Text className="text-xl font-semibold text-gray-800 mb-2">Item 1</Text>
-                    <Text className="text-base text-gray-600 mb-2">Descrição do item 1. Informações adicionais podem ser inseridas aqui.</Text>
-                    <TouchableOpacity className="bg-blue-500 py-2 px-4 rounded-full">
-                        <Text className="text-center text-white font-semibold">Ver Mais</Text>
-                    </TouchableOpacity>
+                    <Link href={{
+                        pathname: "/pokemon/[id]",
+                        params: {
+                            id:2
+                        }
+                    }}>
+                        <CaretRight size={32} />
+                    </Link>
+
                 </View>
 
-                {/* Card de Item 2 */}
-                <View className="bg-white p-4 mb-4 rounded-lg shadow-md">
-                    <View className="items-center">
-                        <Image
-                            source={{ uri: 'https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg' }}
-                            className="w-40 h-52 rounded-lg mb-4"
-                        />
-                    </View>
-                    <Text className="text-xl font-semibold text-gray-800 mb-2">Item 2</Text>
-                    <Text className="text-base text-gray-600 mb-2">Descrição do item 2. Informações adicionais podem ser inseridas aqui.</Text>
-                    <TouchableOpacity className="bg-blue-500 py-2 px-4 rounded-full">
-                        <Text className="text-center text-white font-semibold">Ver Mais</Text>
-                    </TouchableOpacity>
-                </View>
+                {/* <FlatList
+                    showsVerticalScrollIndicator={false}
+                    keyExtractor={(item) => item.name}
+                    data={pokemon}
+                    renderItem={({ item, index }) => (
+                        <Pressable onPress={() => toggleModal(item.name)}>
+                            <View className="flex-row bg-white items-center p-4 justify-between rounded-md mb-4 border border-[#F2F2F2]">
+                                <View className="flex-row gap-2 items-center">
+                                    <Image
+                                        style={{ width: 80, height: 50 }}
+                                        source={{ uri: item.image }}
+                                    />
+                                    <View>
+                                        <Text>#{index + 1}</Text>
+                                        <Text>{item.name}</Text>
+                                    </View>
+                                </View>
 
-                {/* Card de Item 3 */}
-                <View className="bg-white p-4 mb-4 rounded-lg shadow-md">
-                    <View className="items-center">
-                        <Image
-                            source={{ uri: 'https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg' }}
-                            className="w-40 h-52 rounded-lg mb-4"
-                        />
-                    </View>
-                    <Text className="text-xl font-semibold text-gray-800 mb-2">Item 3</Text>
-                    <Text className="text-base text-gray-600 mb-2">Descrição do item 3. Informações adicionais podem ser inseridas aqui.</Text>
-                    <TouchableOpacity className="bg-blue-500 py-2 px-4 rounded-full">
-                        <Text className="text-center text-white font-semibold">Ver Mais</Text>
-                    </TouchableOpacity>
+                                <CaretRight size={32} />
+                            </View>
+                        </Pressable>
+                    )}
+                /> */}
+            </View>
+
+            <View className="bg-white border-t border-[#F2F2F2] p-5 items-center justify-center">
+                <TouchableOpacity className="w-full py-5 items-center rounded-md bg-[#F77764]">
+                    <Text className="text-white">Conhecer um pokemon</Text>
+                </TouchableOpacity>
+                {/* <Pressable
+                    disabled={search ? false : true}
+                    onPress={() => console.log("Oi")}
+                    className={`w-full py-5 items-center rounded-md ${search ? "bg-[#F7776A]" : "bg-[#DADADA]"
+                        }`}
+                >
+                    <Text className="text-white">Conhecer um pokemon</Text>
+                </Pressable> */}
+            </View>
+
+            {/* <Modal
+                isVisible={isToggleModal}
+                onBackdropPress={() => toggleModal()}
+                swipeDirection="down"
+                onSwipeComplete={() => toggleModal()}
+                style={{ justifyContent: "flex-end", margin: 0 }}
+            >
+                <View className="bg-white rounded-t-2xl py-5 px-6 h-[80%]">
+                    <Pokemon name={selectedPokemon} />
                 </View>
-            </ScrollView>
+            </Modal> */}
         </View>
     );
 }
