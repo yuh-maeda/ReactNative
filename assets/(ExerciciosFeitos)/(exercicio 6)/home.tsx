@@ -26,7 +26,7 @@ export default function home() {
 
     return (
         <ScrollView className="flex-1 bg-white px-2">
-            {products.map((item) => (
+            {products.map((item: any) => (
                 <View key={item.id} className="flex-row items-center p-2 border-b border-gray-200">
                     <Image
                         source={{ uri: item.image }}
